@@ -10,40 +10,32 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #0a0d12;
-      --surface:  #12161e;
-      --surface2: #1a1f2b;
-      --border:   rgba(255,255,255,0.07);
-      --border2:  rgba(255,255,255,0.13);
-      --text:     #e8eaf0;
-      --muted:    #7a8195;
-      --accent:   #4f9eff;
-      --success:  #3ecf8e;
-      --warn:     #f5a623;
-      --danger:   #f06060;
-      --cough:    #c084fc;
-      --radius:   16px;
+      --bg:      #0a0d12;
+      --surface: #12161e;
+      --surface2:#1a1f2b;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.13);
+      --text:    #e8eaf0;
+      --muted:   #7a8195;
+      --accent:  #4f9eff;
+      --success: #3ecf8e;
+      --warn:    #f5a623;
+      --danger:  #f06060;
+      --cough:   #c084fc;
+      --radius:  16px;
     }
-
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg); color: var(--text);
       font-family: 'Syne', sans-serif;
-      min-height: 100vh;
-      padding: 40px 24px 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      min-height: 100vh; padding: 40px 24px 60px;
+      display: flex; flex-direction: column; align-items: center;
     }
-
     .app-shell { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 18px; }
 
-    /* ── Header ── */
+    /* Header */
     .header { display: flex; align-items: center; justify-content: space-between; }
     .header-title { font-family: 'DM Serif Display', serif; font-size: 26px; letter-spacing: -0.3px; }
-
     .status-pill {
       display: flex; align-items: center; gap: 7px;
       font-size: 11px; font-weight: 500; letter-spacing: 0.4px; text-transform: uppercase;
@@ -51,27 +43,24 @@
       border: 0.5px solid var(--border2); border-radius: 100px; padding: 5px 14px;
       transition: all 0.3s;
     }
-    .status-pill.active  { color: var(--success); border-color: rgba(62,207,142,0.3); background: rgba(62,207,142,0.07); }
-    .status-pill.warn-state  { color: var(--warn);    border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.07); }
-    .status-pill.error-state { color: var(--danger);  border-color: rgba(240,96,96,0.3);  background: rgba(240,96,96,0.07);  }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .status-pill.active     { color: var(--success); border-color: rgba(62,207,142,0.3);  background: rgba(62,207,142,0.07); }
+    .status-pill.warn-state { color: var(--warn);    border-color: rgba(245,166,35,0.3);  background: rgba(245,166,35,0.07); }
+    .status-pill.error-state{ color: var(--danger);  border-color: rgba(240,96,96,0.3);   background: rgba(240,96,96,0.07); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink:0; }
     .dot.pulse { animation: pulse-dot 1.2s infinite; }
     @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    /* ── Cards ── */
+    /* Cards */
     .card { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius); padding: 20px 22px; }
+    .text-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
-    .text-label {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted);
-      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
-    }
-
+    /* Read text */
     .read-text { font-family: 'DM Serif Display', serif; font-size: 19px; line-height: 1.75; color: var(--text); }
     .read-text span.word { display: inline; transition: color 0.25s, opacity 0.25s; }
     .read-text span.word.done    { color: var(--muted); opacity: 0.4; }
     .read-text span.word.current { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
-    /* ── Visualizer ── */
+    /* Visualizer */
     .visualizer-card { position: relative; height: 104px; display: flex; align-items: center; overflow: hidden; }
     canvas#waveCanvas { width: 100%; height: 88px; display: block; }
     .vad-badge {
@@ -82,15 +71,15 @@
       transition: all 0.25s; user-select: none;
     }
     .vad-badge.voice { color: var(--success); border-color: rgba(62,207,142,0.4);  background: rgba(62,207,142,0.09); }
-    .vad-badge.cough { color: var(--cough);   border-color: rgba(192,132,252,0.4); background: rgba(192,132,252,0.09); }
+    .vad-badge.cough { color: var(--cough);   border-color: rgba(192,132,252,0.4); background: rgba(192,132,252,0.09);}
     .vad-badge.noise { color: var(--warn);    border-color: rgba(245,166,35,0.35); background: rgba(245,166,35,0.08); }
 
-    /* ── Progress ── */
+    /* Progress */
     .progress-section { display: flex; flex-direction: column; gap: 16px; }
     .progress-row  { display: flex; flex-direction: column; gap: 7px; }
     .progress-labels { display: flex; justify-content: space-between; align-items: baseline; }
-    .progress-label { font-size: 12px; color: var(--muted); }
-    .progress-value { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); }
+    .progress-label  { font-size: 12px; color: var(--muted); }
+    .progress-value  { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); }
     .track { height: 6px; background: var(--surface2); border-radius: 100px; border: 0.5px solid var(--border); overflow: hidden; }
     .fill  { height: 100%; border-radius: 100px; transition: width 0.3s ease, background 0.4s; }
     .fill-voice { background: var(--success); }
@@ -98,103 +87,136 @@
     .fill-time.warn { background: var(--warn); }
     .fill-time.crit { background: var(--danger); }
 
-    /* ── Segment timeline ── */
+    /* Segments */
     .segments-row { display: flex; gap: 3px; height: 18px; align-items: flex-end; }
-    .seg-bar       { flex: 1; border-radius: 3px; transition: height 0.12s, background 0.2s; min-height: 3px; }
+    .seg-bar { flex: 1; border-radius: 3px; transition: height 0.12s, background 0.2s; min-height: 3px; }
     .seg-bar.voice-seg  { background: var(--success); }
     .seg-bar.cough-seg  { background: var(--cough); }
     .seg-bar.noise-seg  { background: rgba(245,166,35,0.55); }
     .seg-bar.silent-seg { background: var(--surface2); border: 0.5px solid var(--border); }
 
-    /* ── Metrics ── */
+    /* Legend */
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px; color: var(--muted); padding: 0 2px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot  { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+    /* Metrics */
     .metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .metric-box {
-      background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px;
-      padding: 14px 16px; display: flex; flex-direction: column; gap: 5px;
-    }
+    .metric-box { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
     .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
     .metric-val   { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--text); }
     .metric-val.good { color: var(--success); }
     .metric-val.warn { color: var(--warn); }
     .metric-val.bad  { color: var(--danger); }
 
-    /* ── Config panel ── */
-    .config-card { display: flex; flex-direction: column; gap: 16px; }
-    .config-title {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted);
-      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
-    }
-    .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .config-row  { display: flex; flex-direction: column; gap: 8px; }
-    .config-row-label {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 12px; color: var(--muted);
-    }
-    .config-val { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
-
+    /* Config */
+    .config-card  { display: flex; flex-direction: column; gap: 16px; }
+    .config-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .config-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .config-row   { display: flex; flex-direction: column; gap: 8px; }
+    .config-row-label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+    .config-val   { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
     input[type=range] {
-      -webkit-appearance: none; appearance: none;
-      width: 100%; height: 4px; border-radius: 2px;
+      -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px;
       background: var(--surface2); border: 0.5px solid var(--border2); outline: none; cursor: pointer;
     }
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; appearance: none;
-      width: 16px; height: 16px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--bg); cursor: pointer;
-      transition: transform 0.15s;
+      -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg); cursor: pointer; transition: transform 0.15s;
     }
     input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-
     .apply-btn {
       align-self: flex-start; height: 34px; padding: 0 18px;
-      background: transparent; color: var(--accent);
-      border: 0.5px solid rgba(79,158,255,0.4); border-radius: 8px;
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500;
-      cursor: pointer; transition: all 0.2s;
+      background: transparent; color: var(--accent); border: 0.5px solid rgba(79,158,255,0.4); border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s;
     }
     .apply-btn:hover { background: rgba(79,158,255,0.1); }
 
-    /* ── Alerts ── */
-    .alert-box {
-      padding: 12px 16px; border-radius: 12px; font-size: 13px;
-      display: flex; align-items: center; gap: 10px; transition: all 0.3s;
-    }
+    /* Alerts */
+    .alert-box { padding: 12px 16px; border-radius: 12px; font-size: 13px; display: flex; align-items: center; gap: 10px; transition: all 0.3s; }
     .alert-box.hidden  { display: none; }
     .alert-box.info    { background: rgba(79,158,255,0.09);  border: 0.5px solid rgba(79,158,255,0.3);  color: #a0c8ff; }
     .alert-box.warn    { background: rgba(245,166,35,0.09);  border: 0.5px solid rgba(245,166,35,0.3);  color: #f5c87a; }
     .alert-box.success { background: rgba(62,207,142,0.09);  border: 0.5px solid rgba(62,207,142,0.3);  color: #7ef5c0; }
     .alert-box.error   { background: rgba(240,96,96,0.09);   border: 0.5px solid rgba(240,96,96,0.3);   color: #f5a0a0; }
 
-    /* ── Playback ── */
+    /* Player */
     .player-section {
-      display: flex; align-items: center; gap: 12px;
-      background: var(--surface); border: 0.5px solid var(--border2); border-radius: 14px;
-      padding: 14px 18px;
+      background: var(--surface); border: 0.5px solid var(--border2); border-radius: 14px; padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 16px;
     }
     .player-section.hidden { display: none; }
 
-    .play-btn {
-      display: flex; align-items: center; gap: 7px;
-      height: 38px; padding: 0 18px;
-      background: var(--surface2); color: var(--text);
-      border: 0.5px solid var(--border2); border-radius: 10px;
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+    /* Track rows */
+    .track-row {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 14px 16px; border-radius: 12px;
+      background: rgba(62,207,142,0.05);
+      border: 0.5px solid rgba(62,207,142,0.2);
     }
-    .play-btn:hover  { background: rgba(255,255,255,0.07); }
+    .full-track-row {
+      background: rgba(79,158,255,0.05);
+      border-color: rgba(79,158,255,0.2);
+    }
+    .track-header { display: flex; justify-content: space-between; align-items: center; }
+    .track-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.3px;
+      padding: 4px 10px; border-radius: 100px;
+    }
+    .clean-badge { background: rgba(62,207,142,0.12); color: var(--success); border: 0.5px solid rgba(62,207,142,0.3); }
+    .full-badge  { background: rgba(79,158,255,0.12); color: var(--accent);  border: 0.5px solid rgba(79,158,255,0.3);  }
+    .track-time  { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+    .track-scrubber {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px;
+      background: var(--surface2); border: 0.5px solid var(--border2); outline: none; cursor: pointer;
+    }
+    .track-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--success); border: 2px solid var(--bg); cursor: pointer; transition: transform 0.15s;
+    }
+    .full-track-row .track-scrubber::-webkit-slider-thumb { background: var(--accent); }
+    .track-scrubber::-webkit-slider-thumb:hover { transform: scale(1.25); }
+    .track-controls { display: flex; gap: 10px; }
+    .play-btn {
+      display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 16px;
+      background: var(--surface2); color: var(--text);
+      border: 0.5px solid var(--border2); border-radius: 9px;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .play-btn:hover   { background: rgba(255,255,255,0.07); }
     .play-btn.playing { color: var(--accent); border-color: rgba(79,158,255,0.4); }
-
-    .player-scrubber { flex: 1; }
-    .player-label    { font-size: 11px; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
-    .player-label span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text); }
+    .clean-badge ~ * .play-btn.playing,
+    .track-row:not(.full-track-row) .play-btn.playing { color: var(--success); border-color: rgba(62,207,142,0.4); }
+    .dl-btn {
+      display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 16px;
+      background: transparent; color: var(--muted);
+      border: 0.5px solid var(--border2); border-radius: 9px;
+      font-family: 'Syne', sans-serif; font-size: 13px;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .dl-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
     audio { display: none; }
 
-    /* ── Controls ── */
-    .controls { display: flex; gap: 12px; align-items: center; }
+    /* Clean audio info strip */
+    .clean-strip {
+      display: flex; gap: 0; border-radius: 10px; overflow: hidden;
+      border: 0.5px solid rgba(62,207,142,0.25);
+    }
+    .clean-cell {
+      flex: 1; padding: 10px 14px; background: rgba(62,207,142,0.06);
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .clean-cell + .clean-cell { border-left: 0.5px solid rgba(62,207,142,0.2); }
+    .clean-cell-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: rgba(62,207,142,0.7); }
+    .clean-cell-val   { font-family: 'DM Mono', monospace; font-size: 15px; color: var(--success); }
+    .clean-note { font-size: 11px; color: rgba(62,207,142,0.6); display: flex; align-items: center; gap: 6px; }
 
+    /* Controls */
+    .controls { display: flex; gap: 12px; align-items: center; }
     .btn-primary {
-      flex: 1; height: 52px;
-      background: var(--accent); color: #fff;
+      flex: 1; height: 52px; background: var(--accent); color: #fff;
       border: none; border-radius: 12px;
       font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600;
       cursor: pointer; transition: all 0.2s;
@@ -204,39 +226,24 @@
     .btn-primary:active  { transform: scale(0.98); }
     .btn-primary.recording { background: var(--danger); animation: btn-glow 1.5s infinite; }
     .btn-primary:disabled  { opacity: 0.4; cursor: not-allowed; transform: none; animation: none; }
-    @keyframes btn-glow {
-      0%,100% { box-shadow: 0 0 0 0 rgba(240,96,96,0); }
-      50%      { box-shadow: 0 0 20px 5px rgba(240,96,96,0.28); }
-    }
-
+    @keyframes btn-glow { 0%,100%{ box-shadow:0 0 0 0 rgba(240,96,96,0)} 50%{box-shadow:0 0 20px 5px rgba(240,96,96,0.28)} }
     .btn-secondary {
       height: 52px; padding: 0 20px;
       background: var(--surface2); color: var(--muted);
       border: 0.5px solid var(--border2); border-radius: 12px;
-      font-family: 'Syne', sans-serif; font-size: 14px;
-      cursor: pointer; transition: all 0.2s;
+      font-family: 'Syne', sans-serif; font-size: 14px; cursor: pointer; transition: all 0.2s;
     }
     .btn-secondary:hover   { color: var(--text); }
     .btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
-
     .send-btn {
-      height: 52px; padding: 0 24px;
-      background: var(--success); color: #fff;
+      height: 52px; padding: 0 24px; background: var(--success); color: #fff;
       border: none; border-radius: 12px;
       font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
       cursor: pointer; transition: all 0.2s;
       display: flex; align-items: center; gap: 7px;
     }
-    .send-btn:hover   { background: #5fe0a6; transform: translateY(-1px); }
+    .send-btn:hover    { background: #5fe0a6; transform: translateY(-1px); }
     .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
-
-    /* ── Legend ── */
-    .legend {
-      display: flex; gap: 16px; flex-wrap: wrap;
-      font-size: 11px; color: var(--muted); padding: 0 2px;
-    }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-dot  { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 
     .footer-note { font-size: 11px; color: var(--muted); text-align: center; opacity: 0.55; }
   </style>
@@ -244,7 +251,6 @@
 <body>
 <div class="app-shell">
 
-  <!-- Header -->
   <div class="header">
     <span class="header-title">Voice Capture</span>
     <div class="status-pill" id="statusPill">
@@ -253,23 +259,20 @@
     </div>
   </div>
 
-  <!-- Read text -->
   <div class="card">
     <div class="text-label"><i class="ti ti-book" style="font-size:14px"></i>Read aloud clearly</div>
     <div class="read-text" id="readText"></div>
   </div>
 
-  <!-- Waveform -->
   <div class="card visualizer-card">
     <canvas id="waveCanvas"></canvas>
     <div class="vad-badge" id="vadBadge">— silent</div>
   </div>
 
-  <!-- Progress -->
   <div class="card progress-section">
     <div class="progress-row">
       <div class="progress-labels">
-        <span class="progress-label">Voice collected</span>
+        <span class="progress-label">Clean voice collected</span>
         <span class="progress-value" id="voiceVal">0.0s / 10s</span>
       </div>
       <div class="track"><div class="fill fill-voice" id="voiceFill" style="width:0%"></div></div>
@@ -283,21 +286,20 @@
       <div class="track"><div class="fill fill-time" id="timeFill" style="width:0%"></div></div>
     </div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#3ecf8e"></div>voice</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3ecf8e"></div>voice (recorded)</div>
       <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div>cough (excluded)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:rgba(245,166,35,0.55)"></div>noise</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(245,166,35,0.55)"></div>noise (excluded)</div>
       <div class="legend-item"><div class="legend-dot" style="background:#1a1f2b;border:0.5px solid rgba(255,255,255,0.1)"></div>silent</div>
     </div>
   </div>
 
-  <!-- Metrics -->
   <div class="metrics-grid">
     <div class="metric-box">
       <div class="metric-label">Volume (RMS)</div>
       <div class="metric-val" id="rmsVal">—</div>
     </div>
     <div class="metric-box">
-      <div class="metric-label">Noise / cough</div>
+      <div class="metric-label">Rejected ratio</div>
       <div class="metric-val" id="noiseVal">—</div>
     </div>
     <div class="metric-box">
@@ -306,7 +308,6 @@
     </div>
   </div>
 
-  <!-- Config -->
   <div class="card config-card">
     <div class="config-title"><i class="ti ti-settings" style="font-size:14px"></i>Session configuration</div>
     <div class="config-grid">
@@ -330,29 +331,75 @@
     </button>
   </div>
 
-  <!-- Alert -->
   <div class="alert-box hidden" id="alertBox">
     <i class="ti ti-info-circle"></i>
     <span id="alertMsg"></span>
   </div>
 
-  <!-- Playback -->
+  <!-- Playback + clean audio info -->
   <div class="player-section hidden" id="playerSection">
-    <button class="play-btn" id="playBtn">
-      <i class="ti ti-player-play"></i> Play back
-    </button>
-    <div class="player-scrubber">
-      <div class="player-label">
-        <span>Recorded audio</span>
-        <span id="playbackTime">—</span>
+
+    <!-- Clean audio stats -->
+    <div class="clean-strip">
+      <div class="clean-cell">
+        <div class="clean-cell-label">Clean audio size</div>
+        <div class="clean-cell-val" id="cleanSize">—</div>
       </div>
-      <input type="range" id="scrubber" min="0" max="100" value="0" step="0.1"
-             style="width:100%;margin-top:4px" />
+      <div class="clean-cell">
+        <div class="clean-cell-label">Speech duration</div>
+        <div class="clean-cell-val" id="cleanDur">—</div>
+      </div>
+      <div class="clean-cell" style="flex:2">
+        <div class="clean-cell-label">Filtered out</div>
+        <div class="clean-note">
+          <i class="ti ti-shield-check" style="font-size:13px"></i>
+          Coughs, fan noise &amp; silence stripped
+        </div>
+      </div>
     </div>
-    <audio id="audioPlayer"></audio>
+
+    <!-- Track 1: Clean voice-only -->
+    <div class="track-row">
+      <div class="track-header">
+        <div class="track-badge clean-badge">
+          <i class="ti ti-waveform" style="font-size:12px"></i> Clean voice
+        </div>
+        <span class="track-time" id="cleanPlaybackTime">—</span>
+      </div>
+      <input type="range" class="track-scrubber" id="cleanScrubber" min="0" max="100" value="0" step="0.1" />
+      <div class="track-controls">
+        <button class="play-btn" id="cleanPlayBtn">
+          <i class="ti ti-player-play"></i> Play clean
+        </button>
+        <button class="dl-btn" id="cleanDownloadBtn" title="Download clean audio">
+          <i class="ti ti-download"></i> Download
+        </button>
+      </div>
+      <audio id="cleanPlayer"></audio>
+    </div>
+
+    <!-- Track 2: Full raw recording -->
+    <div class="track-row full-track-row">
+      <div class="track-header">
+        <div class="track-badge full-badge">
+          <i class="ti ti-waveform" style="font-size:12px"></i> Full recording
+        </div>
+        <span class="track-time" id="playbackTime">—</span>
+      </div>
+      <input type="range" class="track-scrubber" id="scrubber" min="0" max="100" value="0" step="0.1" />
+      <div class="track-controls">
+        <button class="play-btn" id="playBtn">
+          <i class="ti ti-player-play"></i> Play back
+        </button>
+        <button class="dl-btn" id="fullDownloadBtn" title="Download full recording">
+          <i class="ti ti-download"></i> Download
+        </button>
+      </div>
+      <audio id="audioPlayer"></audio>
+    </div>
+
   </div>
 
-  <!-- Controls -->
   <div class="controls">
     <button class="btn-primary" id="recBtn">
       <i class="ti ti-microphone"></i> Start Recording
@@ -363,29 +410,22 @@
     </button>
   </div>
 
-  <p class="footer-note">VAD · Cough detection · Fan noise rejection · Min clean speech required</p>
+  <p class="footer-note">Dual-recorder · Voice-only blob sent to backend · Cough &amp; noise frames excluded</p>
 </div>
 
 <script src="app.js"></script>
 <script>
-  // Wire up the scrubber to the audio element
-  const scrubber    = document.getElementById("scrubber");
-  const audioPlayer = document.getElementById("audioPlayer");
-
+  // Full-recording scrubber (clean scrubber is wired inside setupPlayback in app.js)
+  const scrubberFull = document.getElementById("scrubber");
+  const audioPlayer  = document.getElementById("audioPlayer");
   audioPlayer.addEventListener("timeupdate", () => {
-    if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0) {
-      scrubber.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-    }
+    if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0)
+      scrubberFull.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
   });
-
-  audioPlayer.addEventListener("loadedmetadata", () => {
-    scrubber.value = 0;
-  });
-
-  scrubber.addEventListener("input", () => {
-    if (!isNaN(audioPlayer.duration)) {
-      audioPlayer.currentTime = (scrubber.value / 100) * audioPlayer.duration;
-    }
+  audioPlayer.addEventListener("loadedmetadata", () => { scrubberFull.value = 0; });
+  scrubberFull.addEventListener("input", () => {
+    if (!isNaN(audioPlayer.duration))
+      audioPlayer.currentTime = (scrubberFull.value / 100) * audioPlayer.duration;
   });
 </script>
 </body>
