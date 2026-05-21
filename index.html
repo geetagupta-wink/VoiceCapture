@@ -7,322 +7,311 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg:      #0a0d12;
       --surface: #12161e;
-      --surface2:#1a1f2b;
-      --border:  rgba(255,255,255,0.07);
-      --border2: rgba(255,255,255,0.13);
+      --sf2:     #1a1f2b;
+      --b1:      rgba(255,255,255,0.07);
+      --b2:      rgba(255,255,255,0.13);
       --text:    #e8eaf0;
       --muted:   #7a8195;
       --accent:  #4f9eff;
-      --success: #3ecf8e;
+      --ok:      #3ecf8e;
       --warn:    #f5a623;
       --danger:  #f06060;
       --cough:   #c084fc;
-      --radius:  16px;
+      --r:       16px;
     }
     body {
       background: var(--bg); color: var(--text);
       font-family: 'Syne', sans-serif;
-      min-height: 100vh; padding: 40px 24px 60px;
+      min-height: 100vh; padding: 36px 20px 60px;
       display: flex; flex-direction: column; align-items: center;
     }
-    .app-shell { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 18px; }
+    .shell { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 16px; }
 
-    /* Header */
-    .header { display: flex; align-items: center; justify-content: space-between; }
-    .header-title { font-family: 'DM Serif Display', serif; font-size: 26px; letter-spacing: -0.3px; }
-    .status-pill {
+    /* ── Header ── */
+    .hdr { display: flex; align-items: center; justify-content: space-between; }
+    .hdr-title { font-family: 'DM Serif Display', serif; font-size: 26px; letter-spacing: -.3px; }
+    .pill {
       display: flex; align-items: center; gap: 7px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.4px; text-transform: uppercase;
+      font-size: 11px; font-weight: 500; letter-spacing: .4px; text-transform: uppercase;
       color: var(--muted); background: var(--surface);
-      border: 0.5px solid var(--border2); border-radius: 100px; padding: 5px 14px;
-      transition: all 0.3s;
+      border: .5px solid var(--b2); border-radius: 100px; padding: 5px 14px;
+      transition: all .3s;
     }
-    .status-pill.active     { color: var(--success); border-color: rgba(62,207,142,0.3);  background: rgba(62,207,142,0.07); }
-    .status-pill.warn-state { color: var(--warn);    border-color: rgba(245,166,35,0.3);  background: rgba(245,166,35,0.07); }
-    .status-pill.error-state{ color: var(--danger);  border-color: rgba(240,96,96,0.3);   background: rgba(240,96,96,0.07); }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink:0; }
-    .dot.pulse { animation: pulse-dot 1.2s infinite; }
-    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .pill.active      { color: var(--ok);     border-color: rgba(62,207,142,.3);  background: rgba(62,207,142,.07); }
+    .pill.warn-state  { color: var(--warn);   border-color: rgba(245,166,35,.3);  background: rgba(245,166,35,.07); }
+    .pill.error-state { color: var(--danger); border-color: rgba(240,96,96,.3);   background: rgba(240,96,96,.07);  }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .dot.pulse { animation: pd 1.2s infinite; }
+    @keyframes pd { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-    /* Cards */
-    .card { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius); padding: 20px 22px; }
-    .text-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    /* ── Generic card ── */
+    .card { background: var(--surface); border: .5px solid var(--b2); border-radius: var(--r); padding: 20px 22px; }
+    .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
-    /* Read text */
-    .read-text { font-family: 'DM Serif Display', serif; font-size: 19px; line-height: 1.75; color: var(--text); }
-    .read-text span.word { display: inline; transition: color 0.25s, opacity 0.25s; }
-    .read-text span.word.done    { color: var(--muted); opacity: 0.4; }
-    .read-text span.word.current { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+    /* ── Read text ── */
+    .read { font-family: 'DM Serif Display', serif; font-size: 19px; line-height: 1.75; }
+    .read .word { display: inline; transition: color .25s, opacity .25s; }
+    .read .word.done    { color: var(--muted); opacity: .4; }
+    .read .word.current { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
-    /* Visualizer */
-    .visualizer-card { position: relative; height: 104px; display: flex; align-items: center; overflow: hidden; }
-    canvas#waveCanvas { width: 100%; height: 88px; display: block; }
-    .vad-badge {
+    /* ── Visualiser ── */
+    .viz { position: relative; height: 104px; display: flex; align-items: center; overflow: hidden; }
+    #waveCanvas { width: 100%; height: 88px; display: block; }
+    .vbadge {
       position: absolute; top: 14px; right: 14px;
       font-size: 11px; font-family: 'DM Mono', monospace;
       padding: 4px 10px; border-radius: 8px;
-      background: var(--surface2); border: 0.5px solid var(--border2); color: var(--muted);
-      transition: all 0.25s; user-select: none;
+      background: var(--sf2); border: .5px solid var(--b2); color: var(--muted);
+      transition: all .25s; user-select: none;
     }
-    .vad-badge.voice { color: var(--success); border-color: rgba(62,207,142,0.4);  background: rgba(62,207,142,0.09); }
-    .vad-badge.cough { color: var(--cough);   border-color: rgba(192,132,252,0.4); background: rgba(192,132,252,0.09);}
-    .vad-badge.noise { color: var(--warn);    border-color: rgba(245,166,35,0.35); background: rgba(245,166,35,0.08); }
+    .vbadge.voice { color: var(--ok);    border-color: rgba(62,207,142,.4);  background: rgba(62,207,142,.09); }
+    .vbadge.cough { color: var(--cough); border-color: rgba(192,132,252,.4); background: rgba(192,132,252,.09);}
+    .vbadge.noise { color: var(--warn);  border-color: rgba(245,166,35,.35); background: rgba(245,166,35,.08); }
 
-    /* Progress */
-    .progress-section { display: flex; flex-direction: column; gap: 16px; }
-    .progress-row  { display: flex; flex-direction: column; gap: 7px; }
-    .progress-labels { display: flex; justify-content: space-between; align-items: baseline; }
-    .progress-label  { font-size: 12px; color: var(--muted); }
-    .progress-value  { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); }
-    .track { height: 6px; background: var(--surface2); border-radius: 100px; border: 0.5px solid var(--border); overflow: hidden; }
-    .fill  { height: 100%; border-radius: 100px; transition: width 0.3s ease, background 0.4s; }
-    .fill-voice { background: var(--success); }
-    .fill-time  { background: var(--accent); }
-    .fill-time.warn { background: var(--warn); }
-    .fill-time.crit { background: var(--danger); }
+    /* ── Progress ── */
+    .prog { display: flex; flex-direction: column; gap: 14px; }
+    .prow { display: flex; flex-direction: column; gap: 7px; }
+    .plabels { display: flex; justify-content: space-between; align-items: baseline; }
+    .plabel { font-size: 12px; color: var(--muted); }
+    .pval   { font-family: 'DM Mono', monospace; font-size: 13px; }
+    .track  { height: 6px; background: var(--sf2); border-radius: 100px; border: .5px solid var(--b1); overflow: hidden; }
+    .fill   { height: 100%; border-radius: 100px; transition: width .3s ease, background .4s; }
+    .fv { background: var(--ok); }
+    .ft { background: var(--accent); }
+    .ft.warn { background: var(--warn); }
+    .ft.crit { background: var(--danger); }
 
-    /* Segments */
-    .segments-row { display: flex; gap: 3px; height: 18px; align-items: flex-end; }
-    .seg-bar { flex: 1; border-radius: 3px; transition: height 0.12s, background 0.2s; min-height: 3px; }
-    .seg-bar.voice-seg  { background: var(--success); }
-    .seg-bar.cough-seg  { background: var(--cough); }
-    .seg-bar.noise-seg  { background: rgba(245,166,35,0.55); }
-    .seg-bar.silent-seg { background: var(--surface2); border: 0.5px solid var(--border); }
+    /* ── Segments ── */
+    .segs { display: flex; gap: 3px; height: 18px; align-items: flex-end; }
+    .seg  { flex: 1; border-radius: 3px; transition: height .12s, background .2s; min-height: 3px; }
+    .voice-seg  { background: var(--ok); }
+    .cough-seg  { background: var(--cough); }
+    .noise-seg  { background: rgba(245,166,35,.55); }
+    .silent-seg { background: var(--sf2); border: .5px solid var(--b1); }
 
-    /* Legend */
-    .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px; color: var(--muted); padding: 0 2px; }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-dot  { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    /* ── Legend ── */
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11px; color: var(--muted); }
+    .li { display: flex; align-items: center; gap: 5px; }
+    .ld { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 
-    /* Metrics */
-    .metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .metric-box { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
-    .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
-    .metric-val   { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--text); }
-    .metric-val.good { color: var(--success); }
-    .metric-val.warn { color: var(--warn); }
-    .metric-val.bad  { color: var(--danger); }
+    /* ── Metrics ── */
+    .mgrid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .mbox  { background: var(--sf2); border: .5px solid var(--b1); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
+    .mlbl  { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
+    .mval  { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; }
+    .mval.good { color: var(--ok); }
+    .mval.warn { color: var(--warn); }
+    .mval.bad  { color: var(--danger); }
 
-    /* Config */
-    .config-card  { display: flex; flex-direction: column; gap: 16px; }
-    .config-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-    .config-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .config-row   { display: flex; flex-direction: column; gap: 8px; }
-    .config-row-label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
-    .config-val   { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
+    /* ── Config ── */
+    .cfg  { display: flex; flex-direction: column; gap: 14px; }
+    .cgrd { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .crow { display: flex; flex-direction: column; gap: 8px; }
+    .crh  { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+    .crv  { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
     input[type=range] {
       -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px;
-      background: var(--surface2); border: 0.5px solid var(--border2); outline: none; cursor: pointer;
+      background: var(--sf2); border: .5px solid var(--b2); outline: none; cursor: pointer;
     }
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--bg); cursor: pointer; transition: transform 0.15s;
+      -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg); cursor: pointer; transition: transform .15s;
     }
     input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
     .apply-btn {
       align-self: flex-start; height: 34px; padding: 0 18px;
-      background: transparent; color: var(--accent); border: 0.5px solid rgba(79,158,255,0.4); border-radius: 8px;
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+      background: transparent; color: var(--accent);
+      border: .5px solid rgba(79,158,255,.4); border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500;
+      cursor: pointer; transition: all .2s;
     }
-    .apply-btn:hover { background: rgba(79,158,255,0.1); }
+    .apply-btn:hover { background: rgba(79,158,255,.1); }
 
-    /* Alerts */
-    .alert-box { padding: 12px 16px; border-radius: 12px; font-size: 13px; display: flex; align-items: center; gap: 10px; transition: all 0.3s; }
-    .alert-box.hidden  { display: none; }
-    .alert-box.info    { background: rgba(79,158,255,0.09);  border: 0.5px solid rgba(79,158,255,0.3);  color: #a0c8ff; }
-    .alert-box.warn    { background: rgba(245,166,35,0.09);  border: 0.5px solid rgba(245,166,35,0.3);  color: #f5c87a; }
-    .alert-box.success { background: rgba(62,207,142,0.09);  border: 0.5px solid rgba(62,207,142,0.3);  color: #7ef5c0; }
-    .alert-box.error   { background: rgba(240,96,96,0.09);   border: 0.5px solid rgba(240,96,96,0.3);   color: #f5a0a0; }
+    /* ── Alerts ── */
+    .alert { padding: 12px 16px; border-radius: 12px; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+    .alert.hidden  { display: none; }
+    .alert.info    { background: rgba(79,158,255,.09);  border: .5px solid rgba(79,158,255,.3);  color: #a0c8ff; }
+    .alert.warn    { background: rgba(245,166,35,.09);  border: .5px solid rgba(245,166,35,.3);  color: #f5c87a; }
+    .alert.success { background: rgba(62,207,142,.09);  border: .5px solid rgba(62,207,142,.3);  color: #7ef5c0; }
+    .alert.error   { background: rgba(240,96,96,.09);   border: .5px solid rgba(240,96,96,.3);   color: #f5a0a0; }
 
-    /* Player */
-    .player-section {
-      background: var(--surface); border: 0.5px solid var(--border2); border-radius: 14px; padding: 16px 18px;
-      display: flex; flex-direction: column; gap: 16px;
+    /* ── Player section ── */
+    .player-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .player-wrap.hidden { display: none; }
+
+    /* stats strip */
+    .cstrip {
+      display: flex; border-radius: 10px; overflow: hidden;
+      border: .5px solid rgba(62,207,142,.25);
     }
-    .player-section.hidden { display: none; }
+    .ccell {
+      flex: 1; padding: 10px 14px;
+      background: rgba(62,207,142,.06);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .ccell + .ccell { border-left: .5px solid rgba(62,207,142,.2); }
+    .ccell-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .7px; color: rgba(62,207,142,.7); }
+    .ccell-val { font-family: 'DM Mono', monospace; font-size: 15px; color: var(--ok); }
+    .ccell-note { font-size: 11px; color: rgba(62,207,142,.6); display: flex; align-items: center; gap: 6px; }
 
-    /* Track rows */
-    .track-row {
+    /* individual track row */
+    .trow {
       display: flex; flex-direction: column; gap: 10px;
       padding: 14px 16px; border-radius: 12px;
-      background: rgba(62,207,142,0.05);
-      border: 0.5px solid rgba(62,207,142,0.2);
     }
-    .full-track-row {
-      background: rgba(79,158,255,0.05);
-      border-color: rgba(79,158,255,0.2);
-    }
-    .track-header { display: flex; justify-content: space-between; align-items: center; }
-    .track-badge {
+    .trow.clean-row { background: rgba(62,207,142,.05); border: .5px solid rgba(62,207,142,.2); }
+    .trow.full-row  { background: rgba(79,158,255,.05);  border: .5px solid rgba(79,158,255,.2);  }
+    .thdr { display: flex; justify-content: space-between; align-items: center; }
+    .tbadge {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.3px;
-      padding: 4px 10px; border-radius: 100px;
+      font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px;
     }
-    .clean-badge { background: rgba(62,207,142,0.12); color: var(--success); border: 0.5px solid rgba(62,207,142,0.3); }
-    .full-badge  { background: rgba(79,158,255,0.12); color: var(--accent);  border: 0.5px solid rgba(79,158,255,0.3);  }
-    .track-time  { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
-    .track-scrubber {
+    .tbadge.clean { background: rgba(62,207,142,.12); color: var(--ok);     border: .5px solid rgba(62,207,142,.3); }
+    .tbadge.full  { background: rgba(79,158,255,.12);  color: var(--accent); border: .5px solid rgba(79,158,255,.3); }
+    .ttime { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+    .tscrub {
       -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px;
-      background: var(--surface2); border: 0.5px solid var(--border2); outline: none; cursor: pointer;
+      background: var(--sf2); border: .5px solid var(--b2); outline: none; cursor: pointer;
     }
-    .track-scrubber::-webkit-slider-thumb {
+    .clean-row .tscrub::-webkit-slider-thumb,
+    .tscrub.clean-sc::-webkit-slider-thumb {
       -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
-      background: var(--success); border: 2px solid var(--bg); cursor: pointer; transition: transform 0.15s;
+      background: var(--ok); border: 2px solid var(--bg); cursor: pointer;
     }
-    .full-track-row .track-scrubber::-webkit-slider-thumb { background: var(--accent); }
-    .track-scrubber::-webkit-slider-thumb:hover { transform: scale(1.25); }
-    .track-controls { display: flex; gap: 10px; }
-    .play-btn {
+    .full-row .tscrub::-webkit-slider-thumb,
+    .tscrub.full-sc::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg); cursor: pointer;
+    }
+    .tctrl { display: flex; gap: 10px; }
+    .pbtn {
       display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 16px;
-      background: var(--surface2); color: var(--text);
-      border: 0.5px solid var(--border2); border-radius: 9px;
+      background: var(--sf2); color: var(--text);
+      border: .5px solid var(--b2); border-radius: 9px;
       font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
     }
-    .play-btn:hover   { background: rgba(255,255,255,0.07); }
-    .play-btn.playing { color: var(--accent); border-color: rgba(79,158,255,0.4); }
-    .clean-badge ~ * .play-btn.playing,
-    .track-row:not(.full-track-row) .play-btn.playing { color: var(--success); border-color: rgba(62,207,142,0.4); }
-    .dl-btn {
+    .pbtn:hover    { background: rgba(255,255,255,.07); }
+    .pbtn.playing  { color: var(--accent); border-color: rgba(79,158,255,.4); }
+    .clean-row .pbtn.playing { color: var(--ok); border-color: rgba(62,207,142,.4); }
+    .dlbtn {
       display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 16px;
       background: transparent; color: var(--muted);
-      border: 0.5px solid var(--border2); border-radius: 9px;
+      border: .5px solid var(--b2); border-radius: 9px;
       font-family: 'Syne', sans-serif; font-size: 13px;
-      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
     }
-    .dl-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .dlbtn:hover { color: var(--text); background: rgba(255,255,255,.05); }
     audio { display: none; }
 
-    /* Clean audio info strip */
-    .clean-strip {
-      display: flex; gap: 0; border-radius: 10px; overflow: hidden;
-      border: 0.5px solid rgba(62,207,142,0.25);
-    }
-    .clean-cell {
-      flex: 1; padding: 10px 14px; background: rgba(62,207,142,0.06);
-      display: flex; flex-direction: column; gap: 3px;
-    }
-    .clean-cell + .clean-cell { border-left: 0.5px solid rgba(62,207,142,0.2); }
-    .clean-cell-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px; color: rgba(62,207,142,0.7); }
-    .clean-cell-val   { font-family: 'DM Mono', monospace; font-size: 15px; color: var(--success); }
-    .clean-note { font-size: 11px; color: rgba(62,207,142,0.6); display: flex; align-items: center; gap: 6px; }
-
-    /* Controls */
+    /* ── Main controls ── */
     .controls { display: flex; gap: 12px; align-items: center; }
-    .btn-primary {
+    .btn-rec {
       flex: 1; height: 52px; background: var(--accent); color: #fff;
       border: none; border-radius: 12px;
       font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
+      cursor: pointer; transition: all .2s;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .btn-primary:hover   { background: #6aadff; transform: translateY(-1px); }
-    .btn-primary:active  { transform: scale(0.98); }
-    .btn-primary.recording { background: var(--danger); animation: btn-glow 1.5s infinite; }
-    .btn-primary:disabled  { opacity: 0.4; cursor: not-allowed; transform: none; animation: none; }
-    @keyframes btn-glow { 0%,100%{ box-shadow:0 0 0 0 rgba(240,96,96,0)} 50%{box-shadow:0 0 20px 5px rgba(240,96,96,0.28)} }
-    .btn-secondary {
+    .btn-rec:hover    { background: #6aadff; transform: translateY(-1px); }
+    .btn-rec:active   { transform: scale(.98); }
+    .btn-rec.recording { background: var(--danger); animation: glow 1.5s infinite; }
+    .btn-rec:disabled  { opacity: .4; cursor: not-allowed; transform: none; animation: none; }
+    @keyframes glow { 0%,100%{box-shadow:0 0 0 0 rgba(240,96,96,0)} 50%{box-shadow:0 0 20px 5px rgba(240,96,96,.28)} }
+    .btn-sec {
       height: 52px; padding: 0 20px;
-      background: var(--surface2); color: var(--muted);
-      border: 0.5px solid var(--border2); border-radius: 12px;
-      font-family: 'Syne', sans-serif; font-size: 14px; cursor: pointer; transition: all 0.2s;
+      background: var(--sf2); color: var(--muted);
+      border: .5px solid var(--b2); border-radius: 12px;
+      font-family: 'Syne', sans-serif; font-size: 14px;
+      cursor: pointer; transition: all .2s;
     }
-    .btn-secondary:hover   { color: var(--text); }
-    .btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
-    .send-btn {
-      height: 52px; padding: 0 24px; background: var(--success); color: #fff;
+    .btn-sec:hover    { color: var(--text); }
+    .btn-sec:disabled { opacity: .3; cursor: not-allowed; }
+    .btn-send {
+      height: 52px; padding: 0 24px; background: var(--ok); color: #fff;
       border: none; border-radius: 12px;
       font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
+      cursor: pointer; transition: all .2s;
       display: flex; align-items: center; gap: 7px;
     }
-    .send-btn:hover    { background: #5fe0a6; transform: translateY(-1px); }
-    .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+    .btn-send:hover    { background: #5fe0a6; transform: translateY(-1px); }
+    .btn-send:disabled { opacity: .3; cursor: not-allowed; transform: none; }
 
-    .footer-note { font-size: 11px; color: var(--muted); text-align: center; opacity: 0.55; }
+    .foot { font-size: 11px; color: var(--muted); text-align: center; opacity: .5; }
   </style>
 </head>
 <body>
-<div class="app-shell">
+<div class="shell">
 
-  <div class="header">
-    <span class="header-title">Voice Capture</span>
-    <div class="status-pill" id="statusPill">
+  <!-- Header -->
+  <div class="hdr">
+    <span class="hdr-title">Voice Capture</span>
+    <div class="pill" id="statusPill">
       <div class="dot" id="statusDot"></div>
       <span id="statusText">Ready</span>
     </div>
   </div>
 
+  <!-- Read-aloud text -->
   <div class="card">
-    <div class="text-label"><i class="ti ti-book" style="font-size:14px"></i>Read aloud clearly</div>
-    <div class="read-text" id="readText"></div>
+    <div class="lbl"><i class="ti ti-book" style="font-size:14px"></i>Read aloud clearly</div>
+    <div class="read" id="readText"></div>
   </div>
 
-  <div class="card visualizer-card">
+  <!-- Waveform -->
+  <div class="card viz">
     <canvas id="waveCanvas"></canvas>
-    <div class="vad-badge" id="vadBadge">— silent</div>
+    <div class="vbadge" id="vadBadge">— silent</div>
   </div>
 
-  <div class="card progress-section">
-    <div class="progress-row">
-      <div class="progress-labels">
-        <span class="progress-label">Clean voice collected</span>
-        <span class="progress-value" id="voiceVal">0.0s / 10s</span>
+  <!-- Progress -->
+  <div class="card prog">
+    <div class="prow">
+      <div class="plabels">
+        <span class="plabel">Clean voice collected</span>
+        <span class="pval" id="voiceVal">0.0s / 10s</span>
       </div>
-      <div class="track"><div class="fill fill-voice" id="voiceFill" style="width:0%"></div></div>
-      <div class="segments-row" id="segmentsRow"></div>
+      <div class="track"><div class="fill fv" id="voiceFill" style="width:0%"></div></div>
+      <div class="segs" id="segmentsRow"></div>
     </div>
-    <div class="progress-row">
-      <div class="progress-labels">
-        <span class="progress-label">Session time</span>
-        <span class="progress-value" id="timeVal">0.0s / 15s</span>
+    <div class="prow">
+      <div class="plabels">
+        <span class="plabel">Session time</span>
+        <span class="pval" id="timeVal">0.0s / 15s</span>
       </div>
-      <div class="track"><div class="fill fill-time" id="timeFill" style="width:0%"></div></div>
+      <div class="track"><div class="fill ft" id="timeFill" style="width:0%"></div></div>
     </div>
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#3ecf8e"></div>voice (recorded)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div>cough (excluded)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:rgba(245,166,35,0.55)"></div>noise (excluded)</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#1a1f2b;border:0.5px solid rgba(255,255,255,0.1)"></div>silent</div>
+      <div class="li"><div class="ld" style="background:#3ecf8e"></div>voice (recorded)</div>
+      <div class="li"><div class="ld" style="background:#c084fc"></div>cough (excluded)</div>
+      <div class="li"><div class="ld" style="background:rgba(245,166,35,.55)"></div>noise (excluded)</div>
+      <div class="li"><div class="ld" style="background:#1a1f2b;border:.5px solid rgba(255,255,255,.1)"></div>silent</div>
     </div>
   </div>
 
-  <div class="metrics-grid">
-    <div class="metric-box">
-      <div class="metric-label">Volume (RMS)</div>
-      <div class="metric-val" id="rmsVal">—</div>
-    </div>
-    <div class="metric-box">
-      <div class="metric-label">Rejected ratio</div>
-      <div class="metric-val" id="noiseVal">—</div>
-    </div>
-    <div class="metric-box">
-      <div class="metric-label">ZCR</div>
-      <div class="metric-val" id="zcrVal">—</div>
-    </div>
+  <!-- Metrics -->
+  <div class="mgrid">
+    <div class="mbox"><div class="mlbl">Volume RMS</div><div class="mval" id="rmsVal">—</div></div>
+    <div class="mbox"><div class="mlbl">Rejected ratio</div><div class="mval" id="noiseVal">—</div></div>
+    <div class="mbox"><div class="mlbl">ZCR</div><div class="mval" id="zcrVal">—</div></div>
   </div>
 
-  <div class="card config-card">
-    <div class="config-title"><i class="ti ti-settings" style="font-size:14px"></i>Session configuration</div>
-    <div class="config-grid">
-      <div class="config-row">
-        <div class="config-row-label">
-          <span>Max session time</span>
-          <span class="config-val" id="cfgMaxTimeVal">15s</span>
-        </div>
+  <!-- Config -->
+  <div class="card cfg">
+    <div class="lbl"><i class="ti ti-settings" style="font-size:14px"></i>Session configuration</div>
+    <div class="cgrd">
+      <div class="crow">
+        <div class="crh"><span>Max session time</span><span class="crv" id="cfgMaxTimeVal">15s</span></div>
         <input type="range" id="cfgMaxTime" min="10" max="120" step="5" value="15" />
       </div>
-      <div class="config-row">
-        <div class="config-row-label">
-          <span>Voice target</span>
-          <span class="config-val" id="cfgMinVoiceVal">10s</span>
-        </div>
+      <div class="crow">
+        <div class="crh"><span>Voice target</span><span class="crv" id="cfgMinVoiceVal">10s</span></div>
         <input type="range" id="cfgMinVoice" min="3" max="14" step="1" value="10" />
       </div>
     </div>
@@ -331,102 +320,76 @@
     </button>
   </div>
 
-  <div class="alert-box hidden" id="alertBox">
+  <!-- Alert -->
+  <div class="alert hidden" id="alertBox">
     <i class="ti ti-info-circle"></i>
     <span id="alertMsg"></span>
   </div>
 
-  <!-- Playback + clean audio info -->
-  <div class="player-section hidden" id="playerSection">
+  <!-- Player section -->
+  <div class="player-wrap hidden" id="playerSection">
 
-    <!-- Clean audio stats -->
-    <div class="clean-strip">
-      <div class="clean-cell">
-        <div class="clean-cell-label">Clean audio size</div>
-        <div class="clean-cell-val" id="cleanSize">—</div>
+    <!-- Stats strip -->
+    <div class="cstrip">
+      <div class="ccell">
+        <div class="ccell-lbl">Clean size</div>
+        <div class="ccell-val" id="cleanSize">—</div>
       </div>
-      <div class="clean-cell">
-        <div class="clean-cell-label">Speech duration</div>
-        <div class="clean-cell-val" id="cleanDur">—</div>
+      <div class="ccell">
+        <div class="ccell-lbl">Speech duration</div>
+        <div class="ccell-val" id="cleanDur">—</div>
       </div>
-      <div class="clean-cell" style="flex:2">
-        <div class="clean-cell-label">Filtered out</div>
-        <div class="clean-note">
+      <div class="ccell" style="flex:2">
+        <div class="ccell-lbl">Filtered out</div>
+        <div class="ccell-note">
           <i class="ti ti-shield-check" style="font-size:13px"></i>
           Coughs, fan noise &amp; silence stripped
         </div>
       </div>
     </div>
 
-    <!-- Track 1: Clean voice-only -->
-    <div class="track-row">
-      <div class="track-header">
-        <div class="track-badge clean-badge">
-          <i class="ti ti-waveform" style="font-size:12px"></i> Clean voice
-        </div>
-        <span class="track-time" id="cleanPlaybackTime">—</span>
+    <!-- Clean voice track -->
+    <div class="trow clean-row">
+      <div class="thdr">
+        <span class="tbadge clean"><i class="ti ti-waveform" style="font-size:12px"></i>Clean voice</span>
+        <span class="ttime" id="cleanTime">—</span>
       </div>
-      <input type="range" class="track-scrubber" id="cleanScrubber" min="0" max="100" value="0" step="0.1" />
-      <div class="track-controls">
-        <button class="play-btn" id="cleanPlayBtn">
-          <i class="ti ti-player-play"></i> Play clean
-        </button>
-        <button class="dl-btn" id="cleanDownloadBtn" title="Download clean audio">
-          <i class="ti ti-download"></i> Download
-        </button>
+      <input type="range" class="tscrub clean-sc" id="cleanScrubber" min="0" max="100" value="0" step="0.1" />
+      <div class="tctrl">
+        <button class="pbtn" id="cleanPlayBtn"><i class="ti ti-player-play"></i> Play clean</button>
+        <button class="dlbtn" id="cleanDlBtn"><i class="ti ti-download"></i> Download</button>
       </div>
-      <audio id="cleanPlayer"></audio>
+      <audio id="cleanAudio"></audio>
     </div>
 
-    <!-- Track 2: Full raw recording -->
-    <div class="track-row full-track-row">
-      <div class="track-header">
-        <div class="track-badge full-badge">
-          <i class="ti ti-waveform" style="font-size:12px"></i> Full recording
-        </div>
-        <span class="track-time" id="playbackTime">—</span>
+    <!-- Full recording track -->
+    <div class="trow full-row">
+      <div class="thdr">
+        <span class="tbadge full"><i class="ti ti-waveform" style="font-size:12px"></i>Full recording</span>
+        <span class="ttime" id="fullTime">—</span>
       </div>
-      <input type="range" class="track-scrubber" id="scrubber" min="0" max="100" value="0" step="0.1" />
-      <div class="track-controls">
-        <button class="play-btn" id="playBtn">
-          <i class="ti ti-player-play"></i> Play back
-        </button>
-        <button class="dl-btn" id="fullDownloadBtn" title="Download full recording">
-          <i class="ti ti-download"></i> Download
-        </button>
+      <input type="range" class="tscrub full-sc" id="fullScrubber" min="0" max="100" value="0" step="0.1" />
+      <div class="tctrl">
+        <button class="pbtn" id="fullPlayBtn"><i class="ti ti-player-play"></i> Play full</button>
+        <button class="dlbtn" id="fullDlBtn"><i class="ti ti-download"></i> Download</button>
       </div>
-      <audio id="audioPlayer"></audio>
+      <audio id="fullAudio"></audio>
     </div>
+
+    <!-- hidden alias for legacy ref in app.js -->
+    <span id="playbackTime" style="display:none"></span>
 
   </div>
 
+  <!-- Main controls -->
   <div class="controls">
-    <button class="btn-primary" id="recBtn">
-      <i class="ti ti-microphone"></i> Start Recording
-    </button>
-    <button class="btn-secondary" id="resetBtn" disabled>Reset</button>
-    <button class="send-btn" id="sendBtn" disabled>
-      <i class="ti ti-send"></i> Send
-    </button>
+    <button class="btn-rec" id="recBtn"><i class="ti ti-microphone"></i> Start Recording</button>
+    <button class="btn-sec" id="resetBtn" disabled>Reset</button>
+    <button class="btn-send" id="sendBtn" disabled><i class="ti ti-send"></i> Send</button>
   </div>
 
-  <p class="footer-note">Dual-recorder · Voice-only blob sent to backend · Cough &amp; noise frames excluded</p>
+  <p class="foot">Dual-recorder · Clean blob sent to backend · Cough &amp; noise excluded</p>
 </div>
-
 <script src="app.js"></script>
-<script>
-  // Full-recording scrubber (clean scrubber is wired inside setupPlayback in app.js)
-  const scrubberFull = document.getElementById("scrubber");
-  const audioPlayer  = document.getElementById("audioPlayer");
-  audioPlayer.addEventListener("timeupdate", () => {
-    if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0)
-      scrubberFull.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-  });
-  audioPlayer.addEventListener("loadedmetadata", () => { scrubberFull.value = 0; });
-  scrubberFull.addEventListener("input", () => {
-    if (!isNaN(audioPlayer.duration))
-      audioPlayer.currentTime = (scrubberFull.value / 100) * audioPlayer.duration;
-  });
-</script>
 </body>
 </html>
