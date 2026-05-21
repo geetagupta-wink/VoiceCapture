@@ -9,21 +9,22 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0d12;
-      --surface: #12161e;
+      --bg:       #0a0d12;
+      --surface:  #12161e;
       --surface2: #1a1f2b;
-      --border: rgba(255,255,255,0.08);
-      --border2: rgba(255,255,255,0.14);
-      --text: #e8eaf0;
-      --muted: #7a8195;
-      --accent: #4f9eff;
-      --success: #3ecf8e;
-      --warn: #f5a623;
-      --danger: #f06060;
-      --radius: 16px;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.13);
+      --text:     #e8eaf0;
+      --muted:    #7a8195;
+      --accent:   #4f9eff;
+      --success:  #3ecf8e;
+      --warn:     #f5a623;
+      --danger:   #f06060;
+      --cough:    #c084fc;
+      --radius:   16px;
     }
 
     body {
@@ -31,164 +32,164 @@
       color: var(--text);
       font-family: 'Syne', sans-serif;
       min-height: 100vh;
-      padding: 40px 24px;
+      padding: 40px 24px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .app-shell {
-      width: 100%;
-      max-width: 680px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+    .app-shell { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 18px; }
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 4px;
-    }
-
-    .header-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px;
-      letter-spacing: -0.3px;
-      color: var(--text);
-    }
+    /* ── Header ── */
+    .header { display: flex; align-items: center; justify-content: space-between; }
+    .header-title { font-family: 'DM Serif Display', serif; font-size: 26px; letter-spacing: -0.3px; }
 
     .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-      background: var(--surface);
-      border: 0.5px solid var(--border2);
-      border-radius: 100px;
-      padding: 5px 14px;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.4px; text-transform: uppercase;
+      color: var(--muted); background: var(--surface);
+      border: 0.5px solid var(--border2); border-radius: 100px; padding: 5px 14px;
+      transition: all 0.3s;
     }
-    .status-pill.active { color: var(--success); border-color: rgba(62,207,142,0.3); background: rgba(62,207,142,0.07); }
-    .status-pill.warn-state { color: var(--warn); border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.07); }
-    .status-pill.error-state { color: var(--danger); border-color: rgba(240,96,96,0.3); background: rgba(240,96,96,0.07); }
-
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .status-pill.active  { color: var(--success); border-color: rgba(62,207,142,0.3); background: rgba(62,207,142,0.07); }
+    .status-pill.warn-state  { color: var(--warn);    border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.07); }
+    .status-pill.error-state { color: var(--danger);  border-color: rgba(240,96,96,0.3);  background: rgba(240,96,96,0.07);  }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
     .dot.pulse { animation: pulse-dot 1.2s infinite; }
     @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    .card {
-      background: var(--surface);
-      border: 0.5px solid var(--border2);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-    }
+    /* ── Cards ── */
+    .card { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius); padding: 20px 22px; }
 
     .text-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
     }
 
-    .read-text {
-      font-family: 'DM Serif Display', serif;
-      font-size: 20px;
-      line-height: 1.7;
-      color: var(--text);
-    }
+    .read-text { font-family: 'DM Serif Display', serif; font-size: 19px; line-height: 1.75; color: var(--text); }
+    .read-text span.word { display: inline; transition: color 0.25s, opacity 0.25s; }
+    .read-text span.word.done    { color: var(--muted); opacity: 0.4; }
+    .read-text span.word.current { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
-    .read-text span.word { display: inline; transition: color 0.3s, opacity 0.3s; }
-    .read-text span.word.done { color: var(--muted); opacity: 0.45; }
-    .read-text span.word.current {
-      color: var(--accent);
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 1px;
-    }
-
-    .visualizer-card {
-      position: relative;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    canvas#waveCanvas { width: 100%; height: 84px; display: block; }
-
+    /* ── Visualizer ── */
+    .visualizer-card { position: relative; height: 104px; display: flex; align-items: center; overflow: hidden; }
+    canvas#waveCanvas { width: 100%; height: 88px; display: block; }
     .vad-badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      font-size: 11px;
-      font-family: 'DM Mono', monospace;
-      padding: 4px 10px;
-      border-radius: 8px;
-      background: var(--surface2);
-      border: 0.5px solid var(--border2);
-      color: var(--muted);
-      transition: all 0.3s;
+      position: absolute; top: 14px; right: 14px;
+      font-size: 11px; font-family: 'DM Mono', monospace;
+      padding: 4px 10px; border-radius: 8px;
+      background: var(--surface2); border: 0.5px solid var(--border2); color: var(--muted);
+      transition: all 0.25s; user-select: none;
     }
-    .vad-badge.voice { color: var(--success); border-color: rgba(62,207,142,0.4); background: rgba(62,207,142,0.1); }
-    .vad-badge.noise { color: var(--warn); border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.08); }
+    .vad-badge.voice { color: var(--success); border-color: rgba(62,207,142,0.4);  background: rgba(62,207,142,0.09); }
+    .vad-badge.cough { color: var(--cough);   border-color: rgba(192,132,252,0.4); background: rgba(192,132,252,0.09); }
+    .vad-badge.noise { color: var(--warn);    border-color: rgba(245,166,35,0.35); background: rgba(245,166,35,0.08); }
 
+    /* ── Progress ── */
     .progress-section { display: flex; flex-direction: column; gap: 16px; }
-    .progress-row { display: flex; flex-direction: column; gap: 7px; }
+    .progress-row  { display: flex; flex-direction: column; gap: 7px; }
     .progress-labels { display: flex; justify-content: space-between; align-items: baseline; }
-    .progress-label { font-size: 12px; color: var(--muted); letter-spacing: 0.2px; }
+    .progress-label { font-size: 12px; color: var(--muted); }
     .progress-value { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); }
-
     .track { height: 6px; background: var(--surface2); border-radius: 100px; border: 0.5px solid var(--border); overflow: hidden; }
-    .fill { height: 100%; border-radius: 100px; transition: width 0.3s ease, background 0.4s; }
+    .fill  { height: 100%; border-radius: 100px; transition: width 0.3s ease, background 0.4s; }
     .fill-voice { background: var(--success); }
-    .fill-time { background: var(--accent); }
+    .fill-time  { background: var(--accent); }
     .fill-time.warn { background: var(--warn); }
     .fill-time.crit { background: var(--danger); }
 
+    /* ── Segment timeline ── */
     .segments-row { display: flex; gap: 3px; height: 18px; align-items: flex-end; }
-    .seg-bar { flex: 1; border-radius: 3px; transition: height 0.15s, background 0.3s; min-height: 3px; }
-    .seg-bar.voice-seg { background: var(--success); }
-    .seg-bar.noise-seg { background: rgba(245,166,35,0.5); }
+    .seg-bar       { flex: 1; border-radius: 3px; transition: height 0.12s, background 0.2s; min-height: 3px; }
+    .seg-bar.voice-seg  { background: var(--success); }
+    .seg-bar.cough-seg  { background: var(--cough); }
+    .seg-bar.noise-seg  { background: rgba(245,166,35,0.55); }
     .seg-bar.silent-seg { background: var(--surface2); border: 0.5px solid var(--border); }
 
+    /* ── Metrics ── */
     .metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
     .metric-box {
-      background: var(--surface2);
-      border: 0.5px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex; flex-direction: column; gap: 5px;
+      background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 5px;
     }
     .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
-    .metric-val { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--text); }
+    .metric-val   { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--text); }
     .metric-val.good { color: var(--success); }
     .metric-val.warn { color: var(--warn); }
-    .metric-val.bad { color: var(--danger); }
+    .metric-val.bad  { color: var(--danger); }
 
-    .alert-box {
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.3s;
+    /* ── Config panel ── */
+    .config-card { display: flex; flex-direction: column; gap: 16px; }
+    .config-title {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
     }
-    .alert-box.hidden { display: none; }
-    .alert-box.info { background: rgba(79,158,255,0.1); border: 0.5px solid rgba(79,158,255,0.3); color: #a0c8ff; }
-    .alert-box.warn { background: rgba(245,166,35,0.1); border: 0.5px solid rgba(245,166,35,0.3); color: #f5c87a; }
-    .alert-box.success { background: rgba(62,207,142,0.1); border: 0.5px solid rgba(62,207,142,0.3); color: #7ef5c0; }
-    .alert-box.error { background: rgba(240,96,96,0.1); border: 0.5px solid rgba(240,96,96,0.3); color: #f5a0a0; }
+    .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .config-row  { display: flex; flex-direction: column; gap: 8px; }
+    .config-row-label {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--muted);
+    }
+    .config-val { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
 
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 4px; border-radius: 2px;
+      background: var(--surface2); border: 0.5px solid var(--border2); outline: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg); cursor: pointer;
+      transition: transform 0.15s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    .apply-btn {
+      align-self: flex-start; height: 34px; padding: 0 18px;
+      background: transparent; color: var(--accent);
+      border: 0.5px solid rgba(79,158,255,0.4); border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .apply-btn:hover { background: rgba(79,158,255,0.1); }
+
+    /* ── Alerts ── */
+    .alert-box {
+      padding: 12px 16px; border-radius: 12px; font-size: 13px;
+      display: flex; align-items: center; gap: 10px; transition: all 0.3s;
+    }
+    .alert-box.hidden  { display: none; }
+    .alert-box.info    { background: rgba(79,158,255,0.09);  border: 0.5px solid rgba(79,158,255,0.3);  color: #a0c8ff; }
+    .alert-box.warn    { background: rgba(245,166,35,0.09);  border: 0.5px solid rgba(245,166,35,0.3);  color: #f5c87a; }
+    .alert-box.success { background: rgba(62,207,142,0.09);  border: 0.5px solid rgba(62,207,142,0.3);  color: #7ef5c0; }
+    .alert-box.error   { background: rgba(240,96,96,0.09);   border: 0.5px solid rgba(240,96,96,0.3);   color: #f5a0a0; }
+
+    /* ── Playback ── */
+    .player-section {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 0.5px solid var(--border2); border-radius: 14px;
+      padding: 14px 18px;
+    }
+    .player-section.hidden { display: none; }
+
+    .play-btn {
+      display: flex; align-items: center; gap: 7px;
+      height: 38px; padding: 0 18px;
+      background: var(--surface2); color: var(--text);
+      border: 0.5px solid var(--border2); border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .play-btn:hover  { background: rgba(255,255,255,0.07); }
+    .play-btn.playing { color: var(--accent); border-color: rgba(79,158,255,0.4); }
+
+    .player-scrubber { flex: 1; }
+    .player-label    { font-size: 11px; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .player-label span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text); }
+    audio { display: none; }
+
+    /* ── Controls ── */
     .controls { display: flex; gap: 12px; align-items: center; }
 
     .btn-primary {
@@ -199,13 +200,13 @@
       cursor: pointer; transition: all 0.2s;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .btn-primary:hover { background: #6aadff; transform: translateY(-1px); }
-    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:hover   { background: #6aadff; transform: translateY(-1px); }
+    .btn-primary:active  { transform: scale(0.98); }
     .btn-primary.recording { background: var(--danger); animation: btn-glow 1.5s infinite; }
-    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-primary:disabled  { opacity: 0.4; cursor: not-allowed; transform: none; animation: none; }
     @keyframes btn-glow {
       0%,100% { box-shadow: 0 0 0 0 rgba(240,96,96,0); }
-      50% { box-shadow: 0 0 20px 5px rgba(240,96,96,0.3); }
+      50%      { box-shadow: 0 0 20px 5px rgba(240,96,96,0.28); }
     }
 
     .btn-secondary {
@@ -215,7 +216,7 @@
       font-family: 'Syne', sans-serif; font-size: 14px;
       cursor: pointer; transition: all 0.2s;
     }
-    .btn-secondary:hover { color: var(--text); }
+    .btn-secondary:hover   { color: var(--text); }
     .btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
 
     .send-btn {
@@ -226,91 +227,166 @@
       cursor: pointer; transition: all 0.2s;
       display: flex; align-items: center; gap: 7px;
     }
-    .send-btn:hover { background: #5fe0a6; transform: translateY(-1px); }
+    .send-btn:hover   { background: #5fe0a6; transform: translateY(-1px); }
     .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
-    .footer-note {
-      font-size: 11px; color: var(--muted); text-align: center; opacity: 0.6; padding-bottom: 8px;
+    /* ── Legend ── */
+    .legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      font-size: 11px; color: var(--muted); padding: 0 2px;
     }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot  { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+    .footer-note { font-size: 11px; color: var(--muted); text-align: center; opacity: 0.55; }
   </style>
 </head>
 <body>
-  <div class="app-shell">
+<div class="app-shell">
 
-    <div class="header">
-      <span class="header-title">Voice Capture</span>
-      <div class="status-pill" id="statusPill">
-        <div class="dot" id="statusDot"></div>
-        <span id="statusText">Ready</span>
-      </div>
+  <!-- Header -->
+  <div class="header">
+    <span class="header-title">Voice Capture</span>
+    <div class="status-pill" id="statusPill">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">Ready</span>
     </div>
-
-    <div class="card">
-      <div class="text-label">
-        <i class="ti ti-book" style="font-size:14px"></i>
-        Read aloud clearly
-      </div>
-      <div class="read-text" id="readText"></div>
-    </div>
-
-    <div class="card visualizer-card">
-      <canvas id="waveCanvas"></canvas>
-      <div class="vad-badge" id="vadBadge">— silent</div>
-    </div>
-
-    <div class="card progress-section">
-      <div class="progress-row">
-        <div class="progress-labels">
-          <span class="progress-label">Voice collected</span>
-          <span class="progress-value" id="voiceVal">0.0s / 10s</span>
-        </div>
-        <div class="track"><div class="fill fill-voice" id="voiceFill" style="width:0%"></div></div>
-        <div class="segments-row" id="segmentsRow"></div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-labels">
-          <span class="progress-label">Session time</span>
-          <span class="progress-value" id="timeVal">0.0s / 15s</span>
-        </div>
-        <div class="track"><div class="fill fill-time" id="timeFill" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <div class="metrics-grid">
-      <div class="metric-box">
-        <div class="metric-label">Volume (RMS)</div>
-        <div class="metric-val" id="rmsVal">—</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-label">Noise ratio</div>
-        <div class="metric-val" id="noiseVal">—</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-label">ZCR</div>
-        <div class="metric-val" id="zcrVal">—</div>
-      </div>
-    </div>
-
-    <div class="alert-box hidden" id="alertBox">
-      <i class="ti ti-info-circle"></i>
-      <span id="alertMsg"></span>
-    </div>
-
-    <div class="controls">
-      <button class="btn-primary" id="recBtn">
-        <i class="ti ti-microphone"></i>
-        Start Recording
-      </button>
-      <button class="btn-secondary" id="resetBtn" disabled>Reset</button>
-      <button class="send-btn" id="sendBtn" disabled>
-        <i class="ti ti-send"></i>
-        Send
-      </button>
-    </div>
-
-    <p class="footer-note">Voice activity detection · Fan/noise rejection · Min 10s clean speech required</p>
   </div>
 
-  <script src="app.js"></script>
+  <!-- Read text -->
+  <div class="card">
+    <div class="text-label"><i class="ti ti-book" style="font-size:14px"></i>Read aloud clearly</div>
+    <div class="read-text" id="readText"></div>
+  </div>
+
+  <!-- Waveform -->
+  <div class="card visualizer-card">
+    <canvas id="waveCanvas"></canvas>
+    <div class="vad-badge" id="vadBadge">— silent</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="card progress-section">
+    <div class="progress-row">
+      <div class="progress-labels">
+        <span class="progress-label">Voice collected</span>
+        <span class="progress-value" id="voiceVal">0.0s / 10s</span>
+      </div>
+      <div class="track"><div class="fill fill-voice" id="voiceFill" style="width:0%"></div></div>
+      <div class="segments-row" id="segmentsRow"></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-labels">
+        <span class="progress-label">Session time</span>
+        <span class="progress-value" id="timeVal">0.0s / 15s</span>
+      </div>
+      <div class="track"><div class="fill fill-time" id="timeFill" style="width:0%"></div></div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3ecf8e"></div>voice</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div>cough (excluded)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(245,166,35,0.55)"></div>noise</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1a1f2b;border:0.5px solid rgba(255,255,255,0.1)"></div>silent</div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics-grid">
+    <div class="metric-box">
+      <div class="metric-label">Volume (RMS)</div>
+      <div class="metric-val" id="rmsVal">—</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-label">Noise / cough</div>
+      <div class="metric-val" id="noiseVal">—</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-label">ZCR</div>
+      <div class="metric-val" id="zcrVal">—</div>
+    </div>
+  </div>
+
+  <!-- Config -->
+  <div class="card config-card">
+    <div class="config-title"><i class="ti ti-settings" style="font-size:14px"></i>Session configuration</div>
+    <div class="config-grid">
+      <div class="config-row">
+        <div class="config-row-label">
+          <span>Max session time</span>
+          <span class="config-val" id="cfgMaxTimeVal">15s</span>
+        </div>
+        <input type="range" id="cfgMaxTime" min="10" max="120" step="5" value="15" />
+      </div>
+      <div class="config-row">
+        <div class="config-row-label">
+          <span>Voice target</span>
+          <span class="config-val" id="cfgMinVoiceVal">10s</span>
+        </div>
+        <input type="range" id="cfgMinVoice" min="3" max="14" step="1" value="10" />
+      </div>
+    </div>
+    <button class="apply-btn" id="applyConfigBtn">
+      <i class="ti ti-check" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>Apply
+    </button>
+  </div>
+
+  <!-- Alert -->
+  <div class="alert-box hidden" id="alertBox">
+    <i class="ti ti-info-circle"></i>
+    <span id="alertMsg"></span>
+  </div>
+
+  <!-- Playback -->
+  <div class="player-section hidden" id="playerSection">
+    <button class="play-btn" id="playBtn">
+      <i class="ti ti-player-play"></i> Play back
+    </button>
+    <div class="player-scrubber">
+      <div class="player-label">
+        <span>Recorded audio</span>
+        <span id="playbackTime">—</span>
+      </div>
+      <input type="range" id="scrubber" min="0" max="100" value="0" step="0.1"
+             style="width:100%;margin-top:4px" />
+    </div>
+    <audio id="audioPlayer"></audio>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-primary" id="recBtn">
+      <i class="ti ti-microphone"></i> Start Recording
+    </button>
+    <button class="btn-secondary" id="resetBtn" disabled>Reset</button>
+    <button class="send-btn" id="sendBtn" disabled>
+      <i class="ti ti-send"></i> Send
+    </button>
+  </div>
+
+  <p class="footer-note">VAD · Cough detection · Fan noise rejection · Min clean speech required</p>
+</div>
+
+<script src="app.js"></script>
+<script>
+  // Wire up the scrubber to the audio element
+  const scrubber    = document.getElementById("scrubber");
+  const audioPlayer = document.getElementById("audioPlayer");
+
+  audioPlayer.addEventListener("timeupdate", () => {
+    if (!isNaN(audioPlayer.duration) && audioPlayer.duration > 0) {
+      scrubber.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    }
+  });
+
+  audioPlayer.addEventListener("loadedmetadata", () => {
+    scrubber.value = 0;
+  });
+
+  scrubber.addEventListener("input", () => {
+    if (!isNaN(audioPlayer.duration)) {
+      audioPlayer.currentTime = (scrubber.value / 100) * audioPlayer.duration;
+    }
+  });
+</script>
 </body>
 </html>
